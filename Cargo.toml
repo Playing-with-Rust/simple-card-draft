@@ -1,0 +1,11 @@
+[package]
+name = "rpg-draft"
+version = "0.1.0"
+authors = ["Leonardo Vieira <leonardo.marcelino@outlook.com>"]
+edition = "2018"
+
+[dependencies]
+rand = "0.7.3"
+rand_derive = "0.5"
+lipsum = "0.7"
+async-std = "1.7"
