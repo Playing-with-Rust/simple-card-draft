@@ -49,7 +49,7 @@ impl Distribution<CardRarity> for Standard {
 
 impl fmt::Display for CardRarity {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        match *self {
+        match self {
             CardRarity::Common => write!(f, "Common"),
             CardRarity::Uncommon => write!(f, "Uncommon"),
             CardRarity::Rare => write!(f, "Rare")
@@ -57,7 +57,7 @@ impl fmt::Display for CardRarity {
     }
 }
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 pub struct Card {
     pub id: String,
     pub name: String,

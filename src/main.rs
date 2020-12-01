@@ -3,33 +3,35 @@ mod pack;
 mod random;
 mod helpers;
 
-use std::thread;
-use std::sync::mpsc::channel;
-use async_std::task;
-
-async fn say_hello() {
-    println!("Hello, world!");
-}
-
-fn manual_flow() {
-    use crate::pack::Pack;
-    use crate::helpers::ask_input;
-    
-    let mut pack = Pack::new();
-    pack.open();
-
-    let input = ask_input(Some(format!("{}\n\nPlayer 1 - Choose a card from the pack: ", pack)));
-    println!("{}", input);
-    let player_1_pick = pack.pick(input);
-    println!("Picked: {}", player_1_pick.unwrap());
-    
-    let input = ask_input(Some(format!("{}\n\nPlayer 2 - Choose a card from the pack: ", pack)));
-    let player_2_pick = pack.pick(input);
-    println!("Picked: {}", player_2_pick.unwrap());
-
-    println!("Pack has {} remaining...", pack.len())
-}
+use card::Card;
+use helpers::ask_input;
+use pack::Pack;
 
 fn main() {
     manual_flow()
+}
+
+fn manual_flow() {
+    let mut picked_cards: Vec<Card> = vec!();
+    
+    let mut pack1 = Pack::new();
+    pack1.open();
+    picked_cards.push(pick_from_pack(pack1).unwrap());
+    
+    let mut pack2 = Pack::new();
+    pack2.open();
+    picked_cards.push(pick_from_pack(pack2).unwrap());
+    
+    let mut pack3 = Pack::new();
+    pack3.open();
+    picked_cards.push(pick_from_pack(pack3).unwrap());
+
+    println!("Picked cards:\n{:?}", &picked_cards);
+}
+
+fn pick_from_pack(mut pack: Pack) -> Option<Card> {
+    let input = ask_input(Some(format!("{}\n\nPlayer - Choose a card from this pack: ", pack)));
+    println!("{}", input);
+
+    pack.pick(input)
 }

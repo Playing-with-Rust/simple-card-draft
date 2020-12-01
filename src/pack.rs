@@ -3,7 +3,7 @@ use crate::random::Random;
 use std::fmt;
 use crate::card::CardRarity;
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 pub struct Pack {
     cards: Vec<Card>,
     is_open: bool
@@ -39,10 +39,6 @@ impl Pack {
         }
     }
 
-    pub fn len(&self) -> usize {
-        self.cards.len()
-    }
-
     pub fn open(&mut self) -> &Self {
         self.is_open = true;
         self
@@ -63,19 +59,5 @@ impl Pack {
                 None
             },
         }
-    }
-
-    pub fn pick_at(&mut self, index: usize) -> Option<Card> {
-        if !self.is_open {
-            println!("Pack is unopened");
-            return None
-        }
-        
-        if self.cards.len() < index {
-            println!("Pack does not have card at said index");
-            return None
-        }
-
-        Some(self.cards.remove(index))
     }
 }
